@@ -31,9 +31,8 @@ const App = () => {
     'The only way to go fast, is to go well.'
   ]
 
-  
    
-  const [selected, setSelected] = useState(0)
+  const [selected, setSelected] = useState(Math.floor(Math.random() * anecdotes.length))
   const [points, setPoints] = useState(Array.apply(null, Array(anecdotes.length)).map(Number.prototype.valueOf,0))
 
   const click = () => {
