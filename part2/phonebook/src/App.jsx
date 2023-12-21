@@ -1,42 +1,80 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Persons from './components/Persons'
 import PersonForm from './components/PersonForm'
 import Filter from './components/Filter'
+import personService from './services/persons'
 
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-123456' },
-    { name: 'Ada Lovelace', number: '39-44-5323523' },
-    { name: 'Dan Abramov', number: '12-43-234345' },
-    { name: 'Mary Poppendieck', number: '39-23-6423122' }
-  ])
+  
+ 
+  const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [newfilter, setNewfilter] = useState("")
   const [newOut, setNewOut] = useState(persons)
 
-  
 
+  useEffect(() => {
+  personService.getAll().then(start => {
+    setPersons(start)
+    setNewOut(start)
+  })
+
+  }, [])
 
   const addNumber = (event) => {
     event.preventDefault()
     if (persons.map(element =>element.name).indexOf(newName) != -1){
-      window.alert(`${newName} is already added to phonebook`)
+      if (window.confirm(`${newName} is already added to phonebook replace to old number`)){
+      
+      const place = persons.map(element =>element.name).indexOf(newName)
+      const person = persons[place]
+      const changedPerson = { ...person, number: newNumber}
+      
+      personService.update(person.id, changedPerson).then(element =>{
+        
+        setPersons(persons.map(current => person.id !== current.id ? current : element))
+        setNewOut(newOut.map(current => person.id !== current.id ? current : element))
+        setNewName('')
+        setNewNumber('')
+
+      })
+      
+      }
 
     }else{
 
     const noteObject = {
       name: newName,
-      number: newNumber
+      number: newNumber,
+      id: persons[persons.length - 1].id + 1
+      
     }
-    setPersons(persons.concat(noteObject))
-    const filter = newfilter.toLowerCase()
-    const out = persons.concat(noteObject).filter(element => element.name.toLowerCase().includes(filter))
-    setNewOut(out)
-    setNewName('')
-    setNewNumber('')
+    personService.create(noteObject).then( response => {
+      setPersons(persons.concat(noteObject))
+      const filter = newfilter.toLowerCase()
+      const out = 
+      persons.concat(noteObject).filter(element => element.name.toLowerCase().includes(filter))
+      setNewOut(out)
+      setNewName('')
+      setNewNumber('')
+    })
   }
+  }
+
+  const deleteName = (person) => {
+    if (window.confirm(`Do wou want to delete ${person.name}?`)) {
+      
+      personService.deleteName(person.id).then(data => {
+          const temp = persons.filter(element => element !== person)
+          const temp2 = newOut.filter(element => element !== person)
+          setPersons(temp)
+          setNewOut(temp2)
+
+      })
+    }
+    
   }
 
   const handleNameChange = (event) => {
@@ -68,7 +106,7 @@ const App = () => {
         newNumber={newNumber}
        />
       <h3>Numbers</h3>
-        <Persons persons={newOut}/>
+        <Persons key={person.name} persons={newOut} deleteName={deleteName} />
     </div>
   )
 
