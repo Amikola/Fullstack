@@ -93,7 +93,7 @@ describe('total likes', () => {
 
   })
 
-  describe('Favorite blogs', () => {
+describe('Favorite blogs', () => {
     test('of a empty list result is null thing', () => {
         const result = listHelper.favoriteBlog([])
         expect(result).toEqual({
