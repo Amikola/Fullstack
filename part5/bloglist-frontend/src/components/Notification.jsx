@@ -1,18 +1,17 @@
-const Notification = ({ message, type}) => {
+const Notification = ({ message, type }) => {
   if (message === null) {
     return null
   }
-  if (type === "error"){
-  return (
-    <div className="error">
-      {message}
-    </div>
-  )}else if(type === "normal"){
-    console.log("Normaali")
+  if (type === 'error'){
+    return (
+      <div className="error">
+        {message}
+      </div>
+    )}else if(type === 'normal'){
     return(
-    <div className="normal">
-      {message}
-    </div>
+      <div className="normal">
+        {message}
+      </div>
     )
   }
 }
