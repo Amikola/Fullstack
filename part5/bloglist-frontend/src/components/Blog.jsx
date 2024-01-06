@@ -1,7 +1,7 @@
 import Togglable  from './Togglable'
 
 
-const Blog = ({ blog, liker, deleter }) => {
+const Blog = ({ blog, liker, deleter , user }) => {
 
 
   const blogStyle = {
@@ -23,8 +23,10 @@ const Blog = ({ blog, liker, deleter }) => {
   }
 
 
-  return(
-    <div style={blogStyle}>
+
+  if (user.username === blog.user.username) {
+    return (
+    <div style={blogStyle} className="blog">
       {blog.title} {blog.author}
       <Togglable buttonLabel="view" buttonLabelClose="hide">
         <p>{blog.url}</p>
@@ -34,7 +36,18 @@ const Blog = ({ blog, liker, deleter }) => {
         <br/>
       </Togglable>
     </div>
-  )
+  )}else{
+  return(
+    <div style={blogStyle} className="blog">
+      {blog.title} {blog.author}
+      <Togglable buttonLabel="view" buttonLabelClose="hide">
+        <p>{blog.url}</p>
+        <p>likes {blog.likes} <button onClick={() => liker(updated)}>like</button> </p>
+        <p>{blog.user.name}</p>
+        <br/>
+      </Togglable>
+    </div>
+  ) }
 }
 
 export default Blog

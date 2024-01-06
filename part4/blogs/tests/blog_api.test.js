@@ -238,7 +238,7 @@ test('can modify blogs', async () => {
   
   }
 
-  await api.put(`/api/blogs/${id}`).send(newBlog)
+  await api.put(`/api/blogs/${id}`).send(newBlog).expect(200)
 
 
 

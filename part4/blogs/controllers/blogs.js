@@ -62,26 +62,10 @@ middleware.userExtractor,  async (request, response )=> {
 
 blogRouter.put('/:id', async (request, response )=> {
   
-  console.log(request.params.id)
-  
-  const body = request.body
-  
-  let likes = 0
-  if (body.likes){likes = body.likes}
-
-  const blog = new Blog({
-      id: request.params.id,
-      title: body.title,
-      author: body.author,
-      url: body.url,
-      likes: likes
-  })
-
-
-  await Blog.findByIdAndUpdate(request.params.id, blog, {new: true})
-  response.json(blog)
+  const { title, url, author, likes, user } = request.body
+  const updatedBlog = await Blog.findByIdAndUpdate(request.params.id,  { title, url, author, likes, user}, { new: true })
+  response.json(updatedBlog)
 })
-
 
 
 module.exports = blogRouter
