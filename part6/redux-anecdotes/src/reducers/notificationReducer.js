@@ -8,13 +8,24 @@ const messageSlice = createSlice({
     reducers: {
   
       messageChange(state, action) {
-        console.log(action.payload)
         const content = action.payload
         return content
   
     } }
   
   })
+
+
+export const setNotification = ( message, seconds) => {
+    return async dispatch => {
+      
+      dispatch(messageChange(`${message}`))
+      
+      setTimeout(() => {
+        dispatch(messageChange(null))
+      }, seconds*1000)
+    
+    }}
     
   export const { messageChange } = messageSlice.actions
   export default messageSlice.reducer
