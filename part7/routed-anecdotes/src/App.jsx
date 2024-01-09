@@ -3,6 +3,7 @@ import {
   BrowserRouter as Router,
   Routes, Route, Link, useParams, useNavigate
 } from 'react-router-dom'
+import  { useField } from './hooks'
 
 const Menu = () => {
   const padding = {
@@ -62,43 +63,65 @@ const Anecdote = ({anecdotes}) => {
   )
 
 
-}
+  }
 
 const CreateNew = (props) => {
-  const [content, setContent] = useState('')
-  const [author, setAuthor] = useState('')
-  const [info, setInfo] = useState('')
+  const content = useField('text')
+  const author = useField('text')
+  const info = useField('text')
   const navigate = useNavigate()
 
   const handleSubmit = (e) => {
     e.preventDefault()
     props.addNew({
-      content,
-      author,
-      info,
+      content: content.value,
+      author: author.value,
+      info: info.value,
       votes: 0
     })
     navigate('/')
   }
 
+  const clear = () => {
+    content.clear()
+    author.clear()
+    info.clear()
+  }
+
+
   return (
     <div>
       <h2>create a new anecdote</h2>
+      
       <form onSubmit={handleSubmit}>
         <div>
           content
-          <input name='content' value={content} onChange={(e) => setContent(e.target.value)} />
+          <input  
+          value={content.value} 
+          type={content.type}
+          onChange={content.onChange}
+          /> 
         </div>
         <div>
           author
-          <input name='author' value={author} onChange={(e) => setAuthor(e.target.value)} />
+          <input 
+          value={author.value} 
+          type={author.type}
+          onChange={author.onChange}
+          />
         </div>
         <div>
           url for more info
-          <input name='info' value={info} onChange={(e)=> setInfo(e.target.value)} />
+          <input 
+          value={info.value} 
+          type={info.type}
+          onChange={info.onChange}
+          />
         </div>
         <button>create</button>
       </form>
+      <button onClick={clear}>reset</button>
+      
     </div>
   )
 
@@ -129,6 +152,7 @@ const App = () => {
 
 
   const addNew = (anecdote) => {
+    console.log(anecdote)
     anecdote.id = Math.round(Math.random() * 10000)
     setAnecdotes(anecdotes.concat(anecdote))
     setNotification(`a new anecdote ${anecdote.content} created!`)

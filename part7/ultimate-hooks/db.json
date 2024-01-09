@@ -1,0 +1,49 @@
+{
+  "notes": [
+    {
+      "id": 1,
+      "content": "custom-hooks are awesome!"
+    },
+    {
+      "id": 2,
+      "content": "best feature ever <3"
+    },
+    {
+      "content": "asgas",
+      "id": 3
+    },
+    {
+      "content": "asgas",
+      "id": 4
+    },
+    {
+      "content": "asfsa",
+      "id": 5
+    },
+    {
+      "content": "asgsa",
+      "id": 6
+    },
+    {
+      "content": "asgas",
+      "id": 7
+    }
+  ],
+  "persons": [
+    {
+      "id": 1,
+      "name": "mluukkai",
+      "number": "040-5483923"
+    },
+    {
+      "id": 2,
+      "name": "hellas",
+      "number": "012-123123"
+    },
+    {
+      "name": "sagasga",
+      "number": "agsasgasgsa",
+      "id": 3
+    }
+  ]
+}
