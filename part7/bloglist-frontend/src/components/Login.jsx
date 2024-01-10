@@ -1,31 +1,27 @@
 import { useState } from 'react'
 import {setLogin} from "../reducers/loginReducer"
-import { useSelector, useDispatch } from 'react-redux'
+import {useDispatch } from 'react-redux'
+
 
 
 const LoginForm = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
+
   const dispatch = useDispatch()
 
   const handleLogin = (event) => {
     event.preventDefault()
-    console.log("kirjaudun")
     
     const inside = {
       username: username,
       password: password
     }
-    console.log(inside)
-
-    //login(inside)
     dispatch(setLogin(inside))
-
-    
-
     setUsername('')
     setPassword('')
+  
 
   }
 

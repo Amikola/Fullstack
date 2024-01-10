@@ -5,6 +5,7 @@ import blogService from '../services/blogs'
 
 
 
+
 let initialState = null
 
 
@@ -34,5 +35,12 @@ export const setLogin = (object) => {
     dispatch(setUser(out))
     
   }}
+
+export const setData = (object) => {
+    console.log(object)
+    return dispatch => {
+      dispatch(setUser(object))
+    }}
+
 
 export default userSlice.reducer

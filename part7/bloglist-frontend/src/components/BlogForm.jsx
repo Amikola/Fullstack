@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import { createBlog} from '../reducers/blogReducer'
+import { updateUsers} from '../reducers/userReducer'
 import { useDispatch } from 'react-redux'
 import { setNotification} from '../reducers/notificationReducer'
+import Togglable  from './Togglable'
 
 const BlogsForm = () => {
   const [title, setTitle] = useState('')
@@ -10,7 +12,7 @@ const BlogsForm = () => {
   const dispatch = useDispatch()
 
 
-  const addBlog = (event) => {
+  const addBlog =  (event) => {
     event.preventDefault()
     dispatch(createBlog({
       title: title,
@@ -24,8 +26,8 @@ const BlogsForm = () => {
   }
 
   return (
+    <Togglable buttonLabel="Create a new blog"  buttonLabelClose="cancel">
     <form onSubmit={addBlog}>
-
       <div>
         title:
         <input
@@ -63,6 +65,7 @@ const BlogsForm = () => {
       <button id='create' type="submit">create</button>
 
     </form>
+    </Togglable>
   )
 }
 export default BlogsForm

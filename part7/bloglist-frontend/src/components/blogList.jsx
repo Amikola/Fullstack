@@ -2,13 +2,14 @@ import { setNotification } from '../reducers/notificationReducer'
 import { useDispatch, useSelector } from 'react-redux'
 import Togglable  from './Togglable'
 import { deleteBlog, likeBlog} from '../reducers/blogReducer'
+import {Link} from 'react-router-dom'
 
 
 
-const BlogList = ({user}) => { 
+const BlogList = () => { 
     
     const blogs = useSelector(state => state.blogs)
-    const user1 = useSelector(state => state.user)
+    const user = useSelector(state => state.user)
 
     const dispatch = useDispatch()
 
@@ -70,7 +71,7 @@ const BlogList = ({user}) => {
         <div>
             {blogs.map(blog =>
         <div style={blogStyle} className="blog" key={blog.id}>
-        {blog.title} {blog.author}
+        <Link to={`/blogs/${blog.id}`}>{blog.title} {blog.author}</Link>
         <Togglable buttonLabel="view" buttonLabelClose="hide" key={blog.id}>
         <p>{blog.url}</p>
         <p>likes {blog.likes} <button onClick={() => like(blog)}>like</button> </p>
